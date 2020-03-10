@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane fx:controller="fm_view.MainViewController"
+<AnchorPane fx:controller="controller.MainViewController"
             xmlns:fx="http://javafx.com/fxml"
         maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
    <children>
