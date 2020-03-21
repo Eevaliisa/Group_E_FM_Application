@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fmapplication.controller.NewEquipmentController">
+   <children>
+      <VBox layoutX="57.0" layoutY="56.0" prefHeight="900.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="52.0" prefWidth="250.0" text="Add new equipment" textAlignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets top="40.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="eq_title" prefHeight="27.0" prefWidth="355.0" promptText="Title">
+                     <HBox.margin>
+                        <Insets left="122.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="eq_desc" prefHeight="100.0" prefWidth="355.0" promptText="Description">
+                     <HBox.margin>
+                        <Insets left="122.0" />
+                     </HBox.margin>
+                  </TextArea>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <DatePicker fx:id="eq_start" promptText="Start time">
+                     <HBox.margin>
+                        <Insets left="122.0" top="30.0" />
+                     </HBox.margin>
+                  </DatePicker>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <DatePicker fx:id="eq_end" promptText="End time">
+                     <HBox.margin>
+                        <Insets left="122.0" />
+                     </HBox.margin>
+                  </DatePicker>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="eq_rate" prefWidth="355.0" promptText="Rate">
+                     <HBox.margin>
+                        <Insets left="122.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btn_add_new" mnemonicParsing="false" onMouseClicked="#addNewEquipment" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: green;" text="Add" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="225.0" right="75.0" top="30.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                     </padding>
+                  </Button>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btn_back" mnemonicParsing="false" onMouseClicked="#toMainAction" prefWidth="100.0" style="-fx-underline: true; -fx-background-color: f4f4f4;" text="Back">
+                     <HBox.margin>
+                        <Insets left="250.0" top="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
