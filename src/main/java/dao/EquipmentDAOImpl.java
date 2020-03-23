@@ -1,4 +1,4 @@
 package dao;
 
-public class EquipmentDAOImpl {
+public class EquipmentDAOImpl implements EquipmentDAO{
 }
