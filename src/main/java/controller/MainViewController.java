@@ -1,9 +1,18 @@
-package fm_view;
+package controller;
 
-public class MainViewController {
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TabPane;
 
-    public void loginButtonClicked() {
-        System.out.println("button is clicked");
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MainViewController implements Initializable {
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
+
 
 }
