@@ -19,9 +19,9 @@ public class Hibernate {
             Properties settings = new Properties();
 
             settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-            settings.put(Environment.URL, "jdbc:mysql://127.0.0.1:3306/FmDB?serverTimezone=UTC");
-            settings.put(Environment.USER, "root");
-            settings.put(Environment.PASS, "");
+            settings.put(Environment.URL, "jdbc:mysql://resurs.ee:3306/a0099663_FM_Application?serverTimezone=UTC");
+            settings.put(Environment.USER, "a0099663_FMuser");
+            settings.put(Environment.PASS, "l55ZCljH");
             settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
             settings.put(Environment.SHOW_SQL, "true");
             settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
