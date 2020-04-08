@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Technician;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import util.Hibernate;

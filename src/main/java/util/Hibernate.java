@@ -1,5 +1,6 @@
 package util;
 
+import entity.Job;
 import entity.Technician;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -28,6 +29,7 @@ public class Hibernate {
             settings.put(Environment.HBM2DDL_AUTO, "update");
             configuration.setProperties(settings);
             configuration.addAnnotatedClass(Technician.class);
+            configuration.addAnnotatedClass(Job.class);
 
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
