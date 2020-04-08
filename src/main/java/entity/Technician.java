@@ -1,16 +1,17 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(schema = "FmDB", name = "technician")
+@Table(schema = "a0099663_FM_Application", name = "technician")
 
 public class Technician {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private String id;
+    @Column(name = "technicianID")
+    private String technicianID;
 
     @Column(name = "firstName")
     private String firstName;
@@ -27,11 +28,15 @@ public class Technician {
     @Column(name = "location")
     private String technicianLocation;
 
+    @OneToMany (mappedBy = "technician")
+    private List<Job> technicianJobs;
+
+
     public Technician() {
     }
 
-    public Technician(String id, String firstName, String lastName, String trade, String mobileNo, String technicianLocation) {
-        this.id = id;
+    public Technician(String technicianID, String firstName, String lastName, String trade, String mobileNo, String technicianLocation) {
+        this.technicianID = technicianID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.trade = trade;
@@ -39,12 +44,12 @@ public class Technician {
         this.technicianLocation = technicianLocation;
     }
 
-    public String getId() {
-        return id;
+    public String getTechnicianID() {
+        return technicianID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTechnicianID(String technicianID) {
+        this.technicianID = technicianID;
     }
 
     public String getFirstName() {
@@ -87,10 +92,18 @@ public class Technician {
         this.technicianLocation = technicianLocation;
     }
 
+    public List<Job> getTechnicianJobs() {
+        return technicianJobs;
+    }
+
+    public void setTechnicianJobs(List<Job> technicianJobs) {
+        this.technicianJobs = technicianJobs;
+    }
+
     @Override
     public String toString() {
         return "Technician{" +
-                "id='" + id + '\'' +
+                "id='" + technicianID + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", trade='" + trade + '\'' +
