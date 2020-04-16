@@ -32,12 +32,14 @@ public class JobDAOImpl implements JobDAO {
     public List<Job> getAllPendingJobs() {
 
         try (Session session = Hibernate.getSessionFactory().openSession()) {
-            //Session session = Hibernate.getSessionFactory().openSession();
             String hql = "FROM Job j WHERE j.jobStatus = :status";
             Query query = session.createQuery(hql);
             query.setParameter("status", "pending");
             List pendingJobsList = query.getResultList();
             return pendingJobsList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
