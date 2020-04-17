@@ -12,13 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.Main;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import util.Hibernate;
 
 import javax.persistence.NoResultException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -49,6 +49,7 @@ public class LoginController implements Initializable {
             query.setParameter("password", password);
             //List<Technician> results = (List<Technician>) query.list();
             technician = (Technician) query.getSingleResult();
+            Main.setLoggedInTechnician(technician);
 
             if (technician != null) {
                 //!results.isEmpty()

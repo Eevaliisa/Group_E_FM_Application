@@ -3,13 +3,20 @@ package controller;
 import dao.JobDAOImpl;
 import entity.Job;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import main.Main;
 
 import java.net.URL;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -174,7 +181,52 @@ public class MainViewController implements Initializable {
         choiceBoxDeleteJob.getItems().addAll("ID", "Category", "Equipment name", "Status");
 
 
+        fillTable();
 
+    }
+
+    public void fillTable() {
+        List<Job> jobList = jobDAO.getAllPendingJobs();
+        ObservableList<Job> jobObservableList = FXCollections.observableArrayList(jobList);
+
+
+
+
+        tableAvailableColumnID.setCellValueFactory(new PropertyValueFactory<>("jobID"));
+        tableAvailableColumnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tableAvailableColumnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipmentName"));
+        tableAvailableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("jobLocation"));
+        tableAvailableColumnDescription.setCellValueFactory(new PropertyValueFactory<>("jobDescription"));
+
+
+
+
+
+        tableviewAvailableJobs.setItems(jobObservableList);
+        tableviewAvailableJobs.refresh();
+    }
+
+    @FXML
+    void acceptJob(MouseEvent event) {
+        if (Objects.isNull(tableviewAvailableJobs.getSelectionModel())
+                || Objects.isNull(tableviewAvailableJobs.getSelectionModel().getSelectedItem())) {
+
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setHeaderText("ERROR");
+            error.setContentText("Please select job for accept");
+            error.setTitle("No selected job!");
+            error.show();
+            return;
+        }
+
+        int id = tableviewAvailableJobs.getSelectionModel().getSelectedItem().getJobID();
+        Job job = jobDAO.getJobByID(id);
+        job.setTechnicianID(Main.getLoggedInTechnician().getTechnicianID());
+        job.setJobStatus("in progress");
+        job.isAccepted();
+        jobDAO.updateJob(job);
+
+        fillTable();
     }
 }
 

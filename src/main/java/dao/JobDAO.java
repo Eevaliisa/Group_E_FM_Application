@@ -18,6 +18,10 @@ public interface JobDAO {
 
     public List<Job> getAllAcceptedJobs();
 
+    public List<Job> getAllInProgressJobs();
+
+    Job getJobByID(int id);
+
 
 
 
