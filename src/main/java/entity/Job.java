@@ -10,7 +10,7 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "jobID")
-    private String jobID;
+    private int jobID;
 
     @Column(name = "category")
     private String category;
@@ -40,7 +40,7 @@ public class Job {
     }
 
     public Job(
-            String jobID,
+            int jobID,
             String category,
             String equipmentName,
             String jobLocation,
@@ -56,11 +56,11 @@ public class Job {
         this.accepted = accepted;
     }
 
-    public String getJobID() {
+    public int getJobID() {
         return jobID;
     }
 
-    public void setJobID(String jobID) {
+    public void setJobID(int jobID) {
         this.jobID = jobID;
     }
 
@@ -127,6 +127,10 @@ public class Job {
 
     public void setTechnician(Technician technician) {
         this.technician = technician;
+    }
+
+    public Job(int jobID) {
+        this.jobID = jobID;
     }
 
     @Override

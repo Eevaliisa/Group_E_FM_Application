@@ -38,7 +38,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="762.0" prefWidth="990.0">
                                  <children>
-                                    <Button fx:id="buttonAcceptJob" layoutX="851.0" layoutY="722.0" mnemonicParsing="false" onAction="#acceptJobButtonClicked" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Accept">
+                                    <Button fx:id="buttonAcceptJob" layoutX="851.0" layoutY="722.0" mnemonicParsing="false" onMouseClicked="#acceptJob" onAction="#acceptJobButtonClicked" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Accept">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>
