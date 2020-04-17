@@ -3,6 +3,7 @@ package controller;
 import dao.JobDAOImpl;
 import entity.Job;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -130,6 +131,36 @@ public class MainViewController implements Initializable {
 
     @FXML
     private Button buttonContactAdmin;
+
+    @FXML
+    void SaveNewJobButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void SearchJobToDeleteButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void acceptJobButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteJobButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void sendQueryToAdminButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateJobButtonClicked(ActionEvent event) {
+
+    }
 
     JobDAOImpl jobDAO = new JobDAOImpl();
 
