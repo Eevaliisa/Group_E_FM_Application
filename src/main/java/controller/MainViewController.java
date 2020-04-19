@@ -54,7 +54,7 @@ public class MainViewController implements Initializable {
     private Tab tabUpdateJob;
 
     @FXML
-    private TableView<?> tableviewUpdateJob;
+    private TableView<Job> tableviewUpdateJob;
 
     @FXML
     private TableColumn<?, ?> tableUpdateColumnCategory;
@@ -120,7 +120,23 @@ public class MainViewController implements Initializable {
     private Tab tabJobsInProgress;
 
     @FXML
-    private ListView<?> listJobsInProgress;
+    private TableView<Job> tableJobsInProgress;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnID;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnCategory;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnEquipment;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnDescription;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnStatus;
+
 
     @FXML
     private Tab tabRecentJobs;
@@ -186,6 +202,7 @@ public class MainViewController implements Initializable {
 
 
         fillTable();
+        fillInProgressTable();
 
     }
 
@@ -210,6 +227,20 @@ public class MainViewController implements Initializable {
         tableviewAvailableJobs.refresh();
     }
 
+    public void fillInProgressTable() {
+        List<Job> jobInProgressList = jobDAO.getAllInProgressJobs();
+        ObservableList<Job> jobObservableList = FXCollections.observableArrayList(jobInProgressList);
+
+        tableInProgressColumnID.setCellValueFactory(new PropertyValueFactory<>("jobID"));
+        tableInProgressColumnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tableInProgressColumnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipmentName"));
+        tableInProgressColumnDescription.setCellValueFactory(new PropertyValueFactory<>("jobDescription"));
+        tableInProgressColumnStatus.setCellValueFactory(new PropertyValueFactory<>("jobStatus"));
+
+        tableJobsInProgress.setItems(jobObservableList);
+        tableJobsInProgress.refresh();
+    }
+
     @FXML
     void acceptJob(MouseEvent event) {
         if (Objects.isNull(tableviewAvailableJobs.getSelectionModel())
@@ -231,6 +262,7 @@ public class MainViewController implements Initializable {
         jobDAO.updateJob(job);
 
         fillTable();
+        fillInProgressTable();
     }
 
     public void addNewJob(MouseEvent event) {
@@ -251,8 +283,8 @@ public class MainViewController implements Initializable {
             fillTable();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Success!");
-            alert.setTitle("New job added.");
+            alert.setHeaderText("New job added");
+            alert.setTitle("Success!");
             alert.show();
         }
     }

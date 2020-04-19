@@ -38,7 +38,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="762.0" prefWidth="990.0">
                                  <children>
-                                    <Button fx:id="buttonAcceptJob" layoutX="851.0" layoutY="722.0" mnemonicParsing="false" onMouseClicked="#acceptJob" onAction="#acceptJobButtonClicked" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Accept">
+                                    <Button fx:id="buttonAcceptJob" layoutX="851.0" layoutY="722.0" mnemonicParsing="false" onAction="#acceptJobButtonClicked" onMouseClicked="#acceptJob" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Accept">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>
@@ -119,7 +119,7 @@
                                        </font>
                                     </Text>
                                     <TextArea fx:id="textAddJobDescription" layoutX="45.0" layoutY="535.0" prefHeight="147.0" prefWidth="630.0" style="-fx-background-color: #fff3db;" />
-                                    <Button fx:id="buttonAddJob" layoutX="847.0" layoutY="726.0" mnemonicParsing="false" onMouseClicked="#addNewJob" onAction="#SaveNewJobButtonClicked" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Save">
+                                    <Button fx:id="buttonAddJob" layoutX="847.0" layoutY="726.0" mnemonicParsing="false" onAction="#SaveNewJobButtonClicked" onMouseClicked="#addNewJob" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Save">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>
@@ -173,19 +173,15 @@
                                           <Font name="Calibri Bold" size="36.0" />
                                        </font>
                                     </Text>
-                                    <ListView fx:id="listJobsInProgress" layoutX="43.0" layoutY="167.0" prefHeight="554.0" prefWidth="975.0" />
-                                 </children></AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab fx:id="tabRecentJobs" closable="false" style="-fx-pref-width: 150; -fx-font-family: Calibri; -fx-font-weight: Bold; -fx-font-size: 20;" text="Recent jobs">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Text fill="#fff3db" layoutX="43.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recently completed jobs" wrappingWidth="987.6708984375">
-                                       <font>
-                                          <Font name="Calibri Bold" size="36.0" />
-                                       </font>
-                                    </Text>
+                                    <TableView fx:id="tableJobsInProgress" layoutX="35.0" layoutY="155.0" prefHeight="579.0" prefWidth="992.0">
+                                       <columns>
+                                          <TableColumn fx:id="tableInProgressColumnID" prefWidth="89.0" text="ID" />
+                                          <TableColumn fx:id="tableInProgressColumnCategory" prefWidth="150.0" text="Category" />
+                                          <TableColumn fx:id="tableInProgressColumnEquipment" minWidth="0.0" prefWidth="150.0" text="Equipment" />
+                                          <TableColumn fx:id="tableInProgressColumnDescription" minWidth="0.0" prefWidth="397.0" text="Description" />
+                                          <TableColumn fx:id="tableInProgressColumnStatus" prefWidth="205.0" text="Status" />
+                                       </columns>
+                                    </TableView>
                                  </children></AnchorPane>
                            </content>
                         </Tab>
