@@ -19,6 +19,7 @@ import main.Main;
 import java.io.IOException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -105,7 +106,25 @@ public class MainViewController implements Initializable {
     private Label labelSearchByToDeleteJob;
 
     @FXML
-    private ListView<?> listToDeleteJob;
+    private TableView<Job> tableviewDeleteJob;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnID;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnCategory;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnEquipment;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnLocation;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnDescription;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnStatus;
 
     @FXML
     private TextField textFieldToDeleteJob;
@@ -241,6 +260,8 @@ public class MainViewController implements Initializable {
         tableJobsInProgress.refresh();
     }
 
+
+
     @FXML
     void acceptJob(MouseEvent event) {
         if (Objects.isNull(tableviewAvailableJobs.getSelectionModel())
@@ -288,6 +309,78 @@ public class MainViewController implements Initializable {
             alert.show();
         }
     }
+
+
+    private List<Job> jobsListDeletion = new ArrayList<>();
+
+    @FXML
+    void fillDeleteTable(MouseEvent event) {
+        jobsListDeletion.clear();
+        String serachBy = choiceBoxDeleteJob.getValue().toString();
+        switch (serachBy) {
+            case "ID" :
+                jobsListDeletion.add(jobDAO.getJobByID(Integer.parseInt(textFieldToDeleteJob.getText())));
+                break;
+
+            case "Category" :
+                jobsListDeletion.addAll(jobDAO.getAllJobsByCategory(textFieldToDeleteJob.getText()));
+                break;
+
+            case "Equipment name" :
+                jobsListDeletion.addAll(jobDAO.getAllJobsByEquipment(textFieldToDeleteJob.getText()));
+                break;
+
+            case "Status" :
+                jobsListDeletion.addAll(jobDAO.getAllJobsByStatus(textFieldToDeleteJob.getText()));
+                break;
+        }
+
+
+        fillDeleteTable();
+
+
+    }
+
+    void fillDeleteTable() {
+        ObservableList<Job> jobObservableList = FXCollections.observableArrayList(jobsListDeletion);
+
+
+        tableDeleteColumnID.setCellValueFactory(new PropertyValueFactory<>("jobID"));
+        tableDeleteColumnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tableDeleteColumnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipmentName"));
+        tableDeleteColumnDescription.setCellValueFactory(new PropertyValueFactory<>("jobDescription"));
+        tableDeleteColumnLocation.setCellValueFactory(new PropertyValueFactory<>("jobLocation"));
+        tableDeleteColumnStatus.setCellValueFactory(new PropertyValueFactory<>("jobStatus"));
+
+        tableviewDeleteJob.setItems(jobObservableList);
+        tableviewDeleteJob.refresh();
+
+    }
+
+    @FXML
+    void deleteJob(MouseEvent event) {
+
+        if (Objects.isNull(tableviewDeleteJob.getSelectionModel())
+                || Objects.isNull(tableviewDeleteJob.getSelectionModel().getSelectedItem())) {
+
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setHeaderText("ERROR");
+            error.setContentText("Please select Item before clicking Delete");
+            error.setTitle("No selected item!");
+            error.show();
+            return;
+        }
+
+
+        Job job = tableviewDeleteJob.getSelectionModel().getSelectedItem();
+        jobDAO.deleteJob(job);
+        jobsListDeletion.remove(job);
+        fillDeleteTable();
+        fillInProgressTable();
+        fillTable();
+    }
+
+
 }
 
 

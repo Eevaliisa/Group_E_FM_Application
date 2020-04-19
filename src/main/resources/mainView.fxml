@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -144,19 +143,28 @@
                                        </font>
                                     </Text>
                                     <Label fx:id="labelSearchByToDeleteJob" layoutX="162.0" layoutY="194.0" style="-fx-font-family: Calibri; -fx-font-size: 20;" text="Label" />
-                                    <ListView fx:id="listToDeleteJob" layoutX="51.0" layoutY="424.0" prefHeight="234.0" prefWidth="954.0" />
+                                    <TableView fx:id="tableviewDeleteJob" layoutX="51.0" layoutY="405.0" prefHeight="264.0" prefWidth="955.0">
+                                       <columns>
+                                          <TableColumn fx:id="tableDeleteColumnID" prefWidth="47.0" text="ID" />
+                                          <TableColumn fx:id="tableDeleteColumnCategory" prefWidth="253.0" text="Category" />
+                                          <TableColumn fx:id="tableDeleteColumnEquipment" minWidth="0.0" prefWidth="150.0" text="Equipment" />
+                                          <TableColumn fx:id="tableDeleteColumnLocation" prefWidth="174.0" text="Location" />
+                                          <TableColumn fx:id="tableDeleteColumnDescription" prefWidth="355.0" text="Description" />
+                                          <TableColumn fx:id="tableDeleteColumnStatus" prefWidth="136.0" text="Status" />
+                                       </columns>
+                                    </TableView>
                                     <TextField fx:id="textFieldToDeleteJob" layoutX="51.0" layoutY="269.0" prefHeight="48.0" prefWidth="280.0" style="-fx-background-color: #fff3db;" />
                                     <Text fill="#fff3db" layoutX="51.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a job to delete:">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>
                                     </Text>
-                                    <Button fx:id="buttonDeleteJob" layoutX="830.0" layoutY="714.0" mnemonicParsing="false" onAction="#deleteJobButtonClicked" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Delete">
+                                    <Button fx:id="buttonDeleteJob" layoutX="830.0" layoutY="714.0" mnemonicParsing="false" onAction="#deleteJobButtonClicked" onMouseClicked="#deleteJob" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Delete">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="buttonSearchJobToDelete" layoutX="421.0" layoutY="266.0" mnemonicParsing="false" onAction="#SearchJobToDeleteButtonClicked" prefHeight="40.0" prefWidth="131.0" style="-fx-background-color: #ffe0e5;" text="Search">
+                                    <Button fx:id="buttonSearchJobToDelete" layoutX="421.0" layoutY="266.0" mnemonicParsing="false" onAction="#SearchJobToDeleteButtonClicked" onMouseClicked="#fillDeleteTable" prefHeight="40.0" prefWidth="131.0" style="-fx-background-color: #ffe0e5;" text="Search">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>

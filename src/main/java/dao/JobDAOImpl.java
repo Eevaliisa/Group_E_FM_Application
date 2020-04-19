@@ -29,9 +29,7 @@ public class JobDAOImpl implements JobDAO {
         Session session = Hibernate.getSessionFactory().openSession();
         Transaction trx = session.beginTransaction();
 
-        org.hibernate.Query query = session.createQuery("DELETE FROM job WHERE id=:id");
-        query.setInteger("id", job.getJobID());
-        query.executeUpdate();
+        session.delete(job);
         trx.commit();
         session.close();
     }
@@ -54,6 +52,49 @@ public class JobDAOImpl implements JobDAO {
         job = (Job) session.get(Job.class, id);
         session.close();
         return job;
+    }
+
+    @Override
+    public List<Job> getAllJobsByStatus(String status) {
+
+        try (Session session = Hibernate.getSessionFactory().openSession()) {
+            String hql = "FROM Job j WHERE j.jobStatus = :status";
+            Query query = session.createQuery(hql);
+            query.setParameter("status", status);
+            List pendingJobsList = query.getResultList();
+            return pendingJobsList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Job> getAllJobsByEquipment(String equipment) {
+        try (Session session = Hibernate.getSessionFactory().openSession()) {
+            String hql = "FROM Job j WHERE j.equipmentName = :equipment";
+            Query query = session.createQuery(hql);
+            query.setParameter("equipment", equipment);
+            List pendingJobsList = query.getResultList();
+            return pendingJobsList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Job> getAllJobsByCategory(String category) {
+        try (Session session = Hibernate.getSessionFactory().openSession()) {
+            String hql = "FROM Job j WHERE j.category = :category";
+            Query query = session.createQuery(hql);
+            query.setParameter("category", category);
+            List pendingJobsList = query.getResultList();
+            return pendingJobsList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
