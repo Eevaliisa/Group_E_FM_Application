@@ -7,12 +7,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import main.Main;
 
+import java.io.IOException;
 import java.net.URL;
 
 import java.util.List;
@@ -227,6 +231,30 @@ public class MainViewController implements Initializable {
         jobDAO.updateJob(job);
 
         fillTable();
+    }
+
+    public void addNewJob(MouseEvent event) {
+
+        if (textAddJobEquipment.getText().isEmpty() ||
+                textAddJobLocation.getText().isEmpty() ||
+                textAddJobDescription.getText().isEmpty() ) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setContentText("Fill all fields");
+            alert.setTitle("Job is not added");
+            alert.show();
+        } else {
+            Job job = new Job(choiceBoxAddJobCategory.getValue().toString(), textAddJobEquipment.getText(), textAddJobLocation.getText(), textAddJobDescription.getText());
+            job.setJobStatus("pending");
+            jobDAO.addNewJob(job);
+            fillTable();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Success!");
+            alert.setTitle("New job added.");
+            alert.show();
+        }
     }
 }
 
