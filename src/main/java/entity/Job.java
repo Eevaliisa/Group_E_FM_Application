@@ -56,6 +56,13 @@ public class Job {
         this.accepted = accepted;
     }
 
+    public Job(String category, String equipmentName, String jobLocation, String jobDescription) {
+        this.category = category;
+        this.equipmentName = equipmentName;
+        this.jobLocation = jobLocation;
+        this.jobDescription = jobDescription;
+    }
+
     public int getJobID() {
         return jobID;
     }

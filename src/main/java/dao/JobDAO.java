@@ -20,6 +20,13 @@ public interface JobDAO {
 
     public List<Job> getAllInProgressJobs();
 
+    public List<Job> getAllJobsByStatus(String status);
+
+    public List<Job> getAllJobsByEquipment(String equipment);
+
+    public List<Job> getAllJobsByCategory(String category);
+
+
     Job getJobByID(int id);
 
 

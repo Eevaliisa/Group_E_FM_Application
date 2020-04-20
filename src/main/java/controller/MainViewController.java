@@ -7,14 +7,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import main.Main;
 
+import java.io.IOException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -50,7 +55,7 @@ public class MainViewController implements Initializable {
     private Tab tabUpdateJob;
 
     @FXML
-    private TableView<?> tableviewUpdateJob;
+    private TableView<Job> tableviewUpdateJob;
 
     @FXML
     private TableColumn<?, ?> tableUpdateColumnCategory;
@@ -101,7 +106,25 @@ public class MainViewController implements Initializable {
     private Label labelSearchByToDeleteJob;
 
     @FXML
-    private ListView<?> listToDeleteJob;
+    private TableView<Job> tableviewDeleteJob;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnID;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnCategory;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnEquipment;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnLocation;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnDescription;
+
+    @FXML
+    private TableColumn<?, ?> tableDeleteColumnStatus;
 
     @FXML
     private TextField textFieldToDeleteJob;
@@ -116,7 +139,23 @@ public class MainViewController implements Initializable {
     private Tab tabJobsInProgress;
 
     @FXML
-    private ListView<?> listJobsInProgress;
+    private TableView<Job> tableJobsInProgress;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnID;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnCategory;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnEquipment;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnDescription;
+
+    @FXML
+    private TableColumn<?, ?> tableInProgressColumnStatus;
+
 
     @FXML
     private Tab tabRecentJobs;
@@ -182,6 +221,7 @@ public class MainViewController implements Initializable {
 
 
         fillTable();
+        fillInProgressTable();
 
     }
 
@@ -206,6 +246,22 @@ public class MainViewController implements Initializable {
         tableviewAvailableJobs.refresh();
     }
 
+    public void fillInProgressTable() {
+        List<Job> jobInProgressList = jobDAO.getAllInProgressJobs();
+        ObservableList<Job> jobObservableList = FXCollections.observableArrayList(jobInProgressList);
+
+        tableInProgressColumnID.setCellValueFactory(new PropertyValueFactory<>("jobID"));
+        tableInProgressColumnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tableInProgressColumnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipmentName"));
+        tableInProgressColumnDescription.setCellValueFactory(new PropertyValueFactory<>("jobDescription"));
+        tableInProgressColumnStatus.setCellValueFactory(new PropertyValueFactory<>("jobStatus"));
+
+        tableJobsInProgress.setItems(jobObservableList);
+        tableJobsInProgress.refresh();
+    }
+
+
+
     @FXML
     void acceptJob(MouseEvent event) {
         if (Objects.isNull(tableviewAvailableJobs.getSelectionModel())
@@ -227,7 +283,104 @@ public class MainViewController implements Initializable {
         jobDAO.updateJob(job);
 
         fillTable();
+        fillInProgressTable();
     }
+
+    public void addNewJob(MouseEvent event) {
+
+        if (textAddJobEquipment.getText().isEmpty() ||
+                textAddJobLocation.getText().isEmpty() ||
+                textAddJobDescription.getText().isEmpty() ) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setContentText("Fill all fields");
+            alert.setTitle("Job is not added");
+            alert.show();
+        } else {
+            Job job = new Job(choiceBoxAddJobCategory.getValue().toString(), textAddJobEquipment.getText(), textAddJobLocation.getText(), textAddJobDescription.getText());
+            job.setJobStatus("pending");
+            jobDAO.addNewJob(job);
+            fillTable();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("New job added");
+            alert.setTitle("Success!");
+            alert.show();
+        }
+    }
+
+
+    private List<Job> jobsListDeletion = new ArrayList<>();
+
+    @FXML
+    void fillDeleteTable(MouseEvent event) {
+        jobsListDeletion.clear();
+        String serachBy = choiceBoxDeleteJob.getValue().toString();
+        switch (serachBy) {
+            case "ID" :
+                jobsListDeletion.add(jobDAO.getJobByID(Integer.parseInt(textFieldToDeleteJob.getText())));
+                break;
+
+            case "Category" :
+                jobsListDeletion.addAll(jobDAO.getAllJobsByCategory(textFieldToDeleteJob.getText()));
+                break;
+
+            case "Equipment name" :
+                jobsListDeletion.addAll(jobDAO.getAllJobsByEquipment(textFieldToDeleteJob.getText()));
+                break;
+
+            case "Status" :
+                jobsListDeletion.addAll(jobDAO.getAllJobsByStatus(textFieldToDeleteJob.getText()));
+                break;
+        }
+
+
+        fillDeleteTable();
+
+
+    }
+
+    void fillDeleteTable() {
+        ObservableList<Job> jobObservableList = FXCollections.observableArrayList(jobsListDeletion);
+
+
+        tableDeleteColumnID.setCellValueFactory(new PropertyValueFactory<>("jobID"));
+        tableDeleteColumnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tableDeleteColumnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipmentName"));
+        tableDeleteColumnDescription.setCellValueFactory(new PropertyValueFactory<>("jobDescription"));
+        tableDeleteColumnLocation.setCellValueFactory(new PropertyValueFactory<>("jobLocation"));
+        tableDeleteColumnStatus.setCellValueFactory(new PropertyValueFactory<>("jobStatus"));
+
+        tableviewDeleteJob.setItems(jobObservableList);
+        tableviewDeleteJob.refresh();
+
+    }
+
+    @FXML
+    void deleteJob(MouseEvent event) {
+
+        if (Objects.isNull(tableviewDeleteJob.getSelectionModel())
+                || Objects.isNull(tableviewDeleteJob.getSelectionModel().getSelectedItem())) {
+
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setHeaderText("ERROR");
+            error.setContentText("Please select Item before clicking Delete");
+            error.setTitle("No selected item!");
+            error.show();
+            return;
+        }
+
+
+        Job job = tableviewDeleteJob.getSelectionModel().getSelectedItem();
+        jobDAO.deleteJob(job);
+        jobsListDeletion.remove(job);
+        fillDeleteTable();
+        fillInProgressTable();
+        fillTable();
+    }
+
+
 }
 
 
