@@ -3,9 +3,10 @@ package dao;
 import entity.Job;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import util.Hibernate;
 
-import javax.persistence.Query;
+
 import java.util.List;
 
 public class JobDAOImpl implements JobDAO {

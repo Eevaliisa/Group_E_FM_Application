@@ -63,7 +63,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="tableviewUpdateJob" layoutX="37.0" layoutY="101.0" prefHeight="579.0" prefWidth="992.0">
+                                    <TableView fx:id="tableviewUpdateJob" editable="true" layoutX="37.0" layoutY="101.0" prefHeight="579.0" prefWidth="992.0">
                                        <columns>
                                           <TableColumn fx:id="tableUpdateColumnCategory" prefWidth="150.0" text="Category" />
                                           <TableColumn fx:id="tableUpdateColumnEquipment" minWidth="0.0" prefWidth="150.0" text="Equipment" />
@@ -193,7 +193,7 @@
                                  </children></AnchorPane>
                            </content>
                         </Tab>
-                        <Tab fx:id="tabContactAdmin" closable="false" onSelectionChanged="#sendQueryToAdminButtonClicked" style="-fx-pref-width: 155; -fx-font-family: Calibri; -fx-font-weight: Bold; -fx-font-size: 20;" text="Contact Admin">
+                        <Tab fx:id="tabContactAdmin" closable="false" style="-fx-pref-width: 155; -fx-font-family: Calibri; -fx-font-weight: Bold; -fx-font-size: 20;" text="Contact Admin">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -222,7 +222,7 @@
                                           <Font name="Calibri" size="20.0" />
                                        </font>
                                     </TextArea>
-                                    <Button fx:id="buttonContactAdmin" layoutX="849.0" layoutY="712.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Send">
+                                    <Button fx:id="buttonContactAdmin" layoutX="849.0" layoutY="712.0" mnemonicParsing="false" onAction="#sendQueryToAdminButtonClicked" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Send">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>
