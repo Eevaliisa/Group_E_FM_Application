@@ -114,6 +114,19 @@ public class JobDAOImpl implements JobDAO {
     }
 
     @Override
+    public List<Job> gettAllJobs() {
+        try (Session session = Hibernate.getSessionFactory().openSession()) {
+            String hql = "SELECT j FROM Job j";
+            Query query = session.createQuery(hql);
+            List listJobs = query.getResultList();
+            return listJobs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<Job> getAllAcceptedJobs() {
         return null;
     }

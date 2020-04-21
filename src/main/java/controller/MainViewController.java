@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import main.Main;
 
@@ -53,16 +54,16 @@ public class MainViewController implements Initializable {
     private TableView<Job> tableviewUpdateJob;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnCategory;
+    private TableColumn<Job, String> tableUpdateColumnCategory;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnEquipment;
+    private TableColumn<Job, String> tableUpdateColumnEquipment;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnLocation;
+    private TableColumn<Job, String> tableUpdateColumnLocation;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnDescription;
+    private TableColumn<Job, String> tableUpdateColumnDescription;
 
     @FXML
     private TableColumn<?, ?> tableUpdateColumnStatus;
@@ -217,6 +218,7 @@ public class MainViewController implements Initializable {
 
         fillTable();
         fillInProgressTable();
+        fillUpdateTable();
 
     }
 
@@ -232,6 +234,55 @@ public class MainViewController implements Initializable {
 
         tableviewAvailableJobs.setItems(jobObservableList);
         tableviewAvailableJobs.refresh();
+    }
+
+    public void fillUpdateTable() {
+        List<Job> jobList = jobDAO.gettAllJobs();
+        ObservableList<Job> jobObservableList = FXCollections.observableArrayList(jobList);
+
+        tableUpdateColumnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tableUpdateColumnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipmentName"));
+        tableUpdateColumnLocation.setCellValueFactory(new PropertyValueFactory<>("jobLocation"));
+        tableUpdateColumnDescription.setCellValueFactory(new PropertyValueFactory<>("jobDescription"));
+        tableUpdateColumnStatus.setCellValueFactory(new PropertyValueFactory<>("jobStatus"));
+
+        tableviewUpdateJob.setItems(jobObservableList);
+
+
+        tableUpdateColumnEquipment.setCellFactory(TextFieldTableCell.forTableColumn());
+        tableUpdateColumnEquipment.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setEquipmentName(event.getNewValue());
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setUpdated(true);
+        });
+
+        tableUpdateColumnLocation.setCellFactory(TextFieldTableCell.forTableColumn());
+        tableUpdateColumnLocation.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setJobLocation(event.getNewValue());
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setUpdated(true);
+        });
+
+        tableUpdateColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        tableUpdateColumnDescription.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setJobDescription(event.getNewValue());
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setUpdated(true);
+        });
+
+        buttonUpdate.setOnAction(event -> {
+            ObservableList<Job> selectedJobs = tableviewUpdateJob.getItems();
+            for (Job job : selectedJobs) {
+                if (job.isUpdated()) {
+                    jobDAO.updateJob(job);
+                    job.setUpdated(false);
+                    fillTable();
+                    fillDeleteTable();
+                    fillInProgressTable();
+                }
+            }
+        });
+        tableviewUpdateJob.setEditable(true);
+
+
+
     }
 
     public void fillInProgressTable() {
@@ -272,6 +323,7 @@ public class MainViewController implements Initializable {
 
         fillTable();
         fillInProgressTable();
+        fillUpdateTable();
     }
 
     public void addNewJob(MouseEvent event) {
@@ -290,6 +342,10 @@ public class MainViewController implements Initializable {
             job.setJobStatus("pending");
             jobDAO.addNewJob(job);
             fillTable();
+            fillUpdateTable();
+            textAddJobEquipment.clear();
+            textAddJobLocation.clear();
+            textAddJobDescription.clear();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("New job added");
@@ -366,6 +422,7 @@ public class MainViewController implements Initializable {
         fillDeleteTable();
         fillInProgressTable();
         fillTable();
+        fillUpdateTable();
     }
 
 
