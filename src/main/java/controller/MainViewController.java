@@ -252,32 +252,25 @@ public class MainViewController implements Initializable {
         tableUpdateColumnEquipment.setCellFactory(TextFieldTableCell.forTableColumn());
         tableUpdateColumnEquipment.setOnEditCommit(event -> {
             event.getTableView().getItems().get(event.getTablePosition().getRow()).setEquipmentName(event.getNewValue());
-            event.getTableView().getItems().get(event.getTablePosition().getRow()).setUpdated(true);
+            jobDAO.updateJob(event.getTableView().getItems().get(event.getTablePosition().getRow()));
         });
 
         tableUpdateColumnLocation.setCellFactory(TextFieldTableCell.forTableColumn());
         tableUpdateColumnLocation.setOnEditCommit(event -> {
             event.getTableView().getItems().get(event.getTablePosition().getRow()).setJobLocation(event.getNewValue());
-            event.getTableView().getItems().get(event.getTablePosition().getRow()).setUpdated(true);
+            jobDAO.updateJob(event.getTableView().getItems().get(event.getTablePosition().getRow()));
         });
 
         tableUpdateColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
         tableUpdateColumnDescription.setOnEditCommit(event -> {
             event.getTableView().getItems().get(event.getTablePosition().getRow()).setJobDescription(event.getNewValue());
-            event.getTableView().getItems().get(event.getTablePosition().getRow()).setUpdated(true);
+            jobDAO.updateJob(event.getTableView().getItems().get(event.getTablePosition().getRow()));
         });
 
         buttonUpdate.setOnAction(event -> {
-            ObservableList<Job> selectedJobs = tableviewUpdateJob.getItems();
-            for (Job job : selectedJobs) {
-                if (job.isUpdated()) {
-                    jobDAO.updateJob(job);
-                    job.setUpdated(false);
-                    fillTable();
-                    fillDeleteTable();
-                    fillInProgressTable();
-                }
-            }
+            fillTable();
+            fillDeleteTable();
+            fillInProgressTable();
         });
         tableviewUpdateJob.setEditable(true);
 
