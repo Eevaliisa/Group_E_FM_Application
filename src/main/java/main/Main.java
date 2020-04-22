@@ -33,7 +33,7 @@ public class Main extends Application {
         setPrimaryStage(primaryStage);
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         primaryStage.setTitle("Computer Aided Facilities Management");
-        primaryStage.setScene(new Scene(root, 600, 470));
+        primaryStage.setScene(new Scene(root, 609, 521));
         primaryStage.show();
     }
 

@@ -3,8 +3,6 @@ package controller;
 
 import dao.JobDAOImpl;
 import entity.Job;
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,17 +12,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import main.Main;
 
-
-
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.net.URL;
 import java.util.*;
 
@@ -280,7 +272,7 @@ public class MainViewController implements Initializable {
             fillDeleteTable();
             fillInProgressTable();
         });
-        tableviewUpdateJob.setEditable(true);
+        //tableviewUpdateJob.setEditable(true);
 
 
 
