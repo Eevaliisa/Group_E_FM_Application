@@ -10,16 +10,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="470.0" prefWidth="600.0"
-            style="-fx-background-color: #103d35; -fx-border-width: 10; -fx-border-color: #5a9177;"
-            xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="609.0" style="-fx-background-color: #103d35; -fx-border-width: 10; -fx-border-color: #5a9177;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <GridPane hgap="10.0" layoutX="132.0" layoutY="74.0" prefHeight="314.0" prefWidth="355.0" vgap="10.0">
+      <GridPane hgap="10.0" layoutX="132.0" layoutY="70.0" prefHeight="318.0" prefWidth="355.0" vgap="10.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -28,27 +24,32 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="textUsername" prefHeight="40.0" prefWidth="172.0" promptText="Username" style="-fx-background-color: #fff3db;" GridPane.rowIndex="1">
+            <TextField fx:id="textUsername" prefHeight="40.0" prefWidth="172.0" promptText="Username" style="-fx-background-color: #fff3db;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="Calibri" size="32.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="textPassword" prefHeight="40.0" prefWidth="172.0" promptText="Password" style="-fx-background-color: #fff3db;" GridPane.rowIndex="2">
+            <PasswordField fx:id="textPassword" prefHeight="40.0" prefWidth="172.0" promptText="Password" style="-fx-background-color: #fff3db;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Calibri" size="32.0" />
                </font>
             </PasswordField>
-            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="59.0" prefWidth="353.0" text="Log in" textAlignment="CENTER" GridPane.rowIndex="3">
+            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="59.0" prefWidth="353.0" style="-fx-background-color: #ffe0e5; -fx-background-radius: 8,7,6; -fx-background-insets: 0,1,2;" text="Log in" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="Calibri" size="32.0" />
                </font>
             </Button>
-            <Text fill="#fcfafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" textAlignment="CENTER" wrappingWidth="349.97021484375">
-               <font>
-                  <Font name="Calibri Bold" size="55.0" />
-               </font>
-            </Text>
          </children>
       </GridPane>
+      <Button fx:id="btnRegister" layoutX="128.0" layoutY="402.0" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="59.0" prefWidth="353.0" style="-fx-background-color: transparent;" text="Not a user yet? Click here to register!" textAlignment="CENTER" textFill="#fff3db">
+         <font>
+            <Font name="Calibri" size="21.0" />
+         </font>
+      </Button>
+      <Text fill="#fcfafa" layoutX="72.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to FM App" textAlignment="CENTER" wrappingWidth="487.97021484375">
+         <font>
+            <Font name="Calibri Bold" size="55.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

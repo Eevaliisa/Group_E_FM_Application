@@ -32,7 +32,17 @@ public class LoginController implements Initializable {
     @FXML
     private Button btnLogin;
 
+    @FXML
+    private Button btnRegister;
+
     Technician technician = new Technician();
+
+    @FXML
+    void registerButtonClicked(ActionEvent event) {
+
+        loadRegisterScene();
+
+    }
 
     @FXML
     void loginButtonClicked(ActionEvent event) {
@@ -47,7 +57,7 @@ public class LoginController implements Initializable {
             Query query = session.createQuery(select);
             query.setParameter("userName", username);
             query.setParameter("password", password);
-            //List<Technician> results = (List<Technician>) query.list();
+
             technician = (Technician) query.getSingleResult();
             Main.setLoggedInTechnician(technician);
 
@@ -92,6 +102,20 @@ public class LoginController implements Initializable {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+    }
+
+    private void loadRegisterScene() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/registerNewUser.fxml"));
+                Parent root = loader.load();
+                RegisterNewUserController registerNewUserController = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
     }
 
     @Override
