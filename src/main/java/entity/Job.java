@@ -36,6 +36,8 @@ public class Job {
     @ManyToOne
     private Technician technician;
 
+    private boolean isUpdated = false;
+
     public Job() {
     }
 
@@ -138,6 +140,14 @@ public class Job {
 
     public Job(int jobID) {
         this.jobID = jobID;
+    }
+
+    public boolean isUpdated() {
+        return isUpdated;
+    }
+
+    public void setUpdated(boolean updated) {
+        isUpdated = updated;
     }
 
     @Override

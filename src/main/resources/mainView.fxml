@@ -207,7 +207,7 @@
                                           <Font name="Calibri" size="20.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="textFieldContactAdminID" layoutX="46.0" layoutY="204.0" prefHeight="44.0" prefWidth="350.0" promptText="Your ID" style="-fx-background-color: #fff3db;">
+                                    <TextField fx:id="textFieldContactAdminID" layoutX="46.0" layoutY="204.0" prefHeight="44.0" prefWidth="350.0" promptText="Your Email" style="-fx-background-color: #fff3db;">
                                        <font>
                                           <Font name="Calibri" size="20.0" />
                                        </font>
@@ -222,7 +222,7 @@
                                           <Font name="Calibri" size="20.0" />
                                        </font>
                                     </TextArea>
-                                    <Button fx:id="buttonContactAdmin" layoutX="849.0" layoutY="712.0" mnemonicParsing="false" onAction="#sendQueryToAdminButtonClicked" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Send">
+                                    <Button fx:id="buttonContactAdmin" layoutX="849.0" layoutY="712.0" mnemonicParsing="false" onAction="#sendQueryToAdminButtonClicked" onMouseClicked="#sendMessage" prefHeight="63.0" prefWidth="175.0" style="-fx-background-color: #ffe0e5;" text="Send">
                                        <font>
                                           <Font name="Calibri Bold" size="30.0" />
                                        </font>

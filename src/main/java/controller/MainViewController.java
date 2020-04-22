@@ -1,7 +1,9 @@
 package controller;
 
+
 import dao.JobDAOImpl;
 import entity.Job;
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,14 +12,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import main.Main;
 
+
+
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
+
 
 public class MainViewController implements Initializable {
 
@@ -53,16 +63,16 @@ public class MainViewController implements Initializable {
     private TableView<Job> tableviewUpdateJob;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnCategory;
+    private TableColumn<Job, String> tableUpdateColumnCategory;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnEquipment;
+    private TableColumn<Job, String> tableUpdateColumnEquipment;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnLocation;
+    private TableColumn<Job, String> tableUpdateColumnLocation;
 
     @FXML
-    private TableColumn<?, ?> tableUpdateColumnDescription;
+    private TableColumn<Job, String> tableUpdateColumnDescription;
 
     @FXML
     private TableColumn<?, ?> tableUpdateColumnStatus;
@@ -217,6 +227,7 @@ public class MainViewController implements Initializable {
 
         fillTable();
         fillInProgressTable();
+        fillUpdateTable();
 
     }
 
@@ -232,6 +243,47 @@ public class MainViewController implements Initializable {
 
         tableviewAvailableJobs.setItems(jobObservableList);
         tableviewAvailableJobs.refresh();
+    }
+
+    public void fillUpdateTable() {
+        List<Job> jobList = jobDAO.gettAllJobs();
+        ObservableList<Job> jobObservableList = FXCollections.observableArrayList(jobList);
+
+        tableUpdateColumnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        tableUpdateColumnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipmentName"));
+        tableUpdateColumnLocation.setCellValueFactory(new PropertyValueFactory<>("jobLocation"));
+        tableUpdateColumnDescription.setCellValueFactory(new PropertyValueFactory<>("jobDescription"));
+        tableUpdateColumnStatus.setCellValueFactory(new PropertyValueFactory<>("jobStatus"));
+
+        tableviewUpdateJob.setItems(jobObservableList);
+
+        tableUpdateColumnEquipment.setCellFactory(TextFieldTableCell.forTableColumn());
+        tableUpdateColumnEquipment.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setEquipmentName(event.getNewValue());
+            jobDAO.updateJob(event.getTableView().getItems().get(event.getTablePosition().getRow()));
+        });
+
+        tableUpdateColumnLocation.setCellFactory(TextFieldTableCell.forTableColumn());
+        tableUpdateColumnLocation.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setJobLocation(event.getNewValue());
+            jobDAO.updateJob(event.getTableView().getItems().get(event.getTablePosition().getRow()));
+        });
+
+        tableUpdateColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        tableUpdateColumnDescription.setOnEditCommit(event -> {
+            event.getTableView().getItems().get(event.getTablePosition().getRow()).setJobDescription(event.getNewValue());
+            jobDAO.updateJob(event.getTableView().getItems().get(event.getTablePosition().getRow()));
+        });
+
+        buttonUpdate.setOnAction(event -> {
+            fillTable();
+            fillDeleteTable();
+            fillInProgressTable();
+        });
+        tableviewUpdateJob.setEditable(true);
+
+
+
     }
 
     public void fillInProgressTable() {
@@ -272,6 +324,7 @@ public class MainViewController implements Initializable {
 
         fillTable();
         fillInProgressTable();
+        fillUpdateTable();
     }
 
     public void addNewJob(MouseEvent event) {
@@ -290,6 +343,10 @@ public class MainViewController implements Initializable {
             job.setJobStatus("pending");
             jobDAO.addNewJob(job);
             fillTable();
+            fillUpdateTable();
+            textAddJobEquipment.clear();
+            textAddJobLocation.clear();
+            textAddJobDescription.clear();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("New job added");
@@ -366,6 +423,72 @@ public class MainViewController implements Initializable {
         fillDeleteTable();
         fillInProgressTable();
         fillTable();
+        fillUpdateTable();
+    }
+
+    @FXML
+    void sendMessage() {
+        // Recipient's email ID needs to be mentioned.
+        String to = "javatallinn@gmail.com";
+
+        // Sender's email ID needs to be mentioned
+        String from = "javatallinn@gmail.com";
+        final String username = "javatallinn@gmail.com";//change accordingly
+        final String password = "pysruh-wowsej-kIgre8";//change accordingly
+
+        // Assuming you are sending email through relay.jangosmtp.net
+        String host = "smtp.gmail.com";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", "587");
+
+        // Get the Session object.
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+            // Create a default MimeMessage object.
+            Message message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(to));
+
+            // Set Subject: header field
+            message.setSubject(textFieldContactAdminSubject.getText());
+
+            // Now set the actual message
+            message.setText("Customer email: " + textFieldContactAdminID.getText()
+                    +"\nCustomer name: " + textFieldContactAdminName.getText() + "\n" + "\n"
+                    +textFieldContactAdminDescription.getText());
+
+            // Send message
+            Transport.send(message);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Sent message successfully");
+            alert.setTitle("Success!");
+            alert.show();
+
+            textFieldContactAdminName.clear();
+            textFieldContactAdminID.clear();
+            textFieldContactAdminDescription.clear();
+            textFieldContactAdminSubject.clear();
+
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

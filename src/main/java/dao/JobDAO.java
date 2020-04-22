@@ -14,6 +14,8 @@ public interface JobDAO {
 
     void updateJob(Job job);
 
+    public List<Job> gettAllJobs();
+
     public List<Job> getAllPendingJobs();
 
     public List<Job> getAllAcceptedJobs();
