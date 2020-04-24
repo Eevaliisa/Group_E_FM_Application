@@ -15,4 +15,6 @@ public interface TechnicianDAO {
     void updateTechnician(Technician technician);
 
     public List<Technician> getAllTechnicians();
+
+    boolean isExistingTechnician(String id);
 }

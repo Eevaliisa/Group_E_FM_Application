@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
 
         try {
             session.beginTransaction();
-            String select = "FROM Technician t WHERE t.firstName = :userName AND t.id= :password";
+            String select = "FROM Technician WHERE id= :userName AND password= :password";
             Query query = session.createQuery(select);
             query.setParameter("userName", username);
             query.setParameter("password", password);
@@ -95,10 +95,10 @@ public class LoginController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainView.fxml"));
             Parent root = loader.load();
             MainViewController mainViewController = loader.getController();
-
-            Stage stage = new Stage();
+            Main.getPrimaryStage().setScene(new Scene(root));
+            /*Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.show();*/
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -109,10 +109,10 @@ public class LoginController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/registerNewUser.fxml"));
                 Parent root = loader.load();
                 RegisterNewUserController registerNewUserController = loader.getController();
-
-                Stage stage = new Stage();
+                Main.getPrimaryStage().setScene(new Scene(root));
+                /*Stage stage = new Stage();
                 stage.setScene(new Scene(root));
-                stage.show();
+                stage.show();*/
             } catch (Exception ex) {
                 System.out.println(ex);
             }

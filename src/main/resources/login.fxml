@@ -24,7 +24,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="textUsername" prefHeight="40.0" prefWidth="172.0" promptText="Username" style="-fx-background-color: #fff3db;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="textUsername" prefHeight="40.0" prefWidth="172.0" promptText="ID" style="-fx-background-color: #fff3db;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="Calibri" size="32.0" />
                </font>

@@ -5,12 +5,10 @@ import java.util.List;
 
 @Entity
 @Table(schema = "a0099663_FM_Application", name = "technician")
-
 public class Technician {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "technicianID")
+    @Column(name = "technicianID",unique = true, nullable = false)
     private String technicianID;
 
     @Column(name = "firstName")
@@ -28,6 +26,9 @@ public class Technician {
     @Column(name = "location")
     private String technicianLocation;
 
+    @Column(name = "password")
+    private String technicianPassword;
+
     @OneToMany (mappedBy = "technician")
     private List<Job> technicianJobs;
 
@@ -35,13 +36,14 @@ public class Technician {
     public Technician() {
     }
 
-    public Technician(String technicianID, String firstName, String lastName, String trade, String mobileNo, String technicianLocation) {
+    public Technician(String technicianID, String firstName, String lastName, String trade, String mobileNo, String technicianLocation, String technicianPassword) {
         this.technicianID = technicianID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.trade = trade;
         this.mobileNo = mobileNo;
         this.technicianLocation = technicianLocation;
+        this.technicianPassword = technicianPassword;
     }
 
     public String getTechnicianID() {
