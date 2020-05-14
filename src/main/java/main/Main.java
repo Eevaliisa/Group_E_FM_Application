@@ -35,6 +35,7 @@ public class Main extends Application {
         primaryStage.setTitle("Computer Aided Facilities Management");
         primaryStage.setScene(new Scene(root, 609, 521));
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
 
 
